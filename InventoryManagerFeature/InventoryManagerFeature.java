@@ -50,7 +50,6 @@ class InventoryMangement
 }
 
 
-
 //CLASS INVENTORY MANAGEMENT PROGRAM
 public class InventoryManagerFeature
 {
