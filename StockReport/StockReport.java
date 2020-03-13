@@ -8,6 +8,7 @@ import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 
 
+//STOCK CLASS
 class Stock
 {
 	public void showStockReport() throws IOException, ParseException
