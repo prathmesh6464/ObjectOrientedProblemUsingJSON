@@ -65,8 +65,7 @@ class InventoryManager extends InventoryMangement
 		System.out.println("Enter inventory to see total price (Rice,Pulses,Wheat): ");
 		Scanner sc = new Scanner(System.in);
 		String findInventory = sc.next();
-		showInventory(findInventory);
-		
+		showInventory(findInventory);		
 	}	
 }
 
