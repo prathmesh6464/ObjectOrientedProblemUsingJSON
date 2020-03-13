@@ -56,5 +56,6 @@ public class InventoryManagerFeature
 	public static void main(String[] args) 
 	{
 		InventoryMangement inventoryManagementObject = new InventoryMangement();
+		System.out.println();
 	}
 }
