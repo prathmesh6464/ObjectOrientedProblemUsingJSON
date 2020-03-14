@@ -1,11 +1,8 @@
 package RegularExpressionProblem;
 import java.io.BufferedReader;
-import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.Scanner;
-import java.util.regex.*;
-
 
 
 //REGULAR EXPRESSION
@@ -13,12 +10,36 @@ class RegularExpression
 {
 	void readFile() throws IOException
 	{
+		//READING FILE
 		BufferedReader bufferedReaderObject = new BufferedReader(new FileReader("//home//admin1//Documents//GamblerProblem//SnakeAndLadder//RegExFileData.txt"));
+		Scanner sc = new Scanner(System.in);
+		
+		
 		String lineOfRegExFileData = "";
 		while(lineOfRegExFileData != null)
 		{
 			lineOfRegExFileData = bufferedReaderObject.readLine();
-			System.out.println(lineOfRegExFileData);
+			if(lineOfRegExFileData != null)
+			{
+				//CONSTANT VARIABLES;
+				String NAME = "Prathamesh";
+				int DAY = 14;
+				int MONTH = 03;
+				int YEAR = 2020;
+				long MOBILE = 9869986900L;
+				String MOBILE_NUMBER = Long.toString(MOBILE);
+				String FULL_NAME = "Prathamesh Bhiku Jadhav";
+				
+				
+				lineOfRegExFileData = lineOfRegExFileData.replaceAll("<<[a-zA-z]+>>",NAME);
+				lineOfRegExFileData = lineOfRegExFileData.replaceAll("<<[a-zA-z]+[ ]{1}[a-zA-z]+>>",FULL_NAME);
+				lineOfRegExFileData = lineOfRegExFileData.replaceAll("[x]{10}",MOBILE_NUMBER);
+				lineOfRegExFileData = lineOfRegExFileData.replaceAll("[\\d]{2}[/]{1}[\\d]{2}[/]{1}[\\d]{4}",DAY+"/"+MONTH+"/"+YEAR);
+				
+				
+				//SHOWING REPLACE MESSAGE
+				System.out.println(lineOfRegExFileData);
+			}
 		}
 	}
 }
