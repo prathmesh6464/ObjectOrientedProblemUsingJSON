@@ -23,13 +23,13 @@ class RegularExpression
 			{
 				//CONSTANT VARIABLES;
 				String NAME = "Prathamesh";
+				String FULL_NAME = "Prathamesh Bhiku Jadhav";
 				int DAY = 14;
 				int MONTH = 03;
 				int YEAR = 2020;
 				long MOBILE = 9869986900L;
 				String MOBILE_NUMBER = Long.toString(MOBILE);
-				String FULL_NAME = "Prathamesh Bhiku Jadhav";
-				
+								
 				
 				lineOfRegExFileData = lineOfRegExFileData.replaceAll("<<[a-zA-z]+>>",NAME);
 				lineOfRegExFileData = lineOfRegExFileData.replaceAll("<<[a-zA-z]+[ ]{1}[a-zA-z]+>>",FULL_NAME);
