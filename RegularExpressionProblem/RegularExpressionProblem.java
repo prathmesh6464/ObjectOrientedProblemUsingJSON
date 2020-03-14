@@ -44,6 +44,7 @@ class RegularExpression
 				System.out.println(lineOfRegExFileData);
 			}
 		}
+		bufferedReaderObject.close();
 	}
 }
 
