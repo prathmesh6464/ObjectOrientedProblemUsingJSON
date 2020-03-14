@@ -8,18 +8,17 @@ import java.util.Scanner;
 //REGULAR EXPRESSION
 class RegularExpression
 {
-	void readFile() throws IOException
+	//CONSTANT VARIABLES;
+	private String NAME = "Prathamesh";
+	private String FULL_NAME = "Prathamesh Bhiku Jadhav";
+	private int DAY = 14;
+	private int MONTH = 03;
+	private int YEAR = 2020;
+	private long MOBILE = 9869986900L;
+	private String MOBILE_NUMBER = Long.toString(MOBILE);
+			
+	public void readFile() throws IOException
 	{
-		//CONSTANT VARIABLES;
-		String NAME = "Prathamesh";
-		String FULL_NAME = "Prathamesh Bhiku Jadhav";
-		int DAY = 14;
-		int MONTH = 03;
-		int YEAR = 2020;
-		long MOBILE = 9869986900L;
-		String MOBILE_NUMBER = Long.toString(MOBILE);
-		
-		
 		//VARIABLE
 		String lineOfRegExFileData = "";
 		
