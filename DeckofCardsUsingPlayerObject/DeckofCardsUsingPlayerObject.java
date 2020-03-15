@@ -1,4 +1,5 @@
 package DeckofCardsUsingPlayerObject;
+
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Random;
@@ -116,24 +117,24 @@ class queueOfCards<T>
 				//SPLITING ARRAY DATA INTO RANK AND SUIT
 				String [] arrayOfRank1 = (arrayForSortingcards[arrayIndex2]).split("-",2);
 				String [] arrayOfRank2 = (arrayForSortingcards[arrayIndex3]).split("-",2);
-				
-				
+
+
 				//SORTING ARRAY
 				if(0 < (arrayOfRank1[1].compareTo(arrayOfRank2[1])))
 				{					
 					String temparorySwapVairable = arrayForSortingcards[arrayIndex2];
 					arrayForSortingcards[arrayIndex2] = arrayForSortingcards[arrayIndex3];
 					arrayForSortingcards[arrayIndex3] = temparorySwapVairable;		
-				}						
+				}
 			}
 		}
-		
-		
+
+
 		//VARIABLES
 		cardNode temporaryHeadCardNode = headCardNode;
 		int arrayIndex1 = 0;
-		
-		
+
+
 		//ADDING CARDS FORM QUEUE TO ARRAY
 		while(temporaryHeadCardNode.nextCardNode != null)
 		{				
@@ -153,14 +154,14 @@ class Cards
 	String[] suit = {"Clubs","Diamonds", "Hearts","Spades"};
 	String[][] cards = new String[suit.length][rank.length];
 	String[] player = {"player1","player2","player3","player4"};
-	
-	
+
+
 	//CREATED OBJECTS OF LINK LIST OF CARDS CLASS (HAS-A RELATIONSHIP - COMPOSITION)
 	queueOfCards queueOfCardsObject1 = new queueOfCards();
 	queueOfCards queueOfCardsObject2 = new queueOfCards();
 	queueOfCards queueOfCardsObject3 = new queueOfCards();
 	queueOfCards queueOfCardsObject4 = new queueOfCards();
-	
+
 
 	//SHUFFLE METHOD
 	void shuffle() throws FileNotFoundException, IOException
@@ -169,7 +170,7 @@ class Cards
 		Random randomCards = new Random();
 		int row = randomCards.nextInt(suit.length);
 		int column = randomCards.nextInt(rank.length);
-		
+
 
 		//INSETING CARDS FROM 2-D ARRAYS
 		for (int suitIterator=0; suitIterator<suit.length; suitIterator++)
@@ -191,9 +192,8 @@ class Cards
 					row = randomCards.nextInt(suit.length);
 					column = randomCards.nextInt(rank.length);
 				}
-				System.out.println(player[suitIterator]+ " : " + cards[row][column]);
-				
-				
+
+
 				if(suitIterator == 0)
 					queueOfCardsObject1.enqueue("Player"+(suitIterator+1)+" : "+cards[row][column]);				
 				else if(suitIterator == 1 )
@@ -204,10 +204,35 @@ class Cards
 					queueOfCardsObject4.enqueue("Player"+(suitIterator+1)+" : "+cards[row][column]);	
 				cards[row][column] = null;
 			}
-			System.out.println();
-		}
-	
-	}	
+		}	
+	}
+
+
+	//SHOW PLAYER AND CARDS
+	void showPlayerAndCardsInSortedOrder() throws FileNotFoundException, IOException
+	{
+		System.out.println("********** Player 1 cards : **********");
+		queueOfCardsObject1.saveSortedCards();
+		queueOfCardsObject1.showCardQueue();
+		System.out.println();
+
+
+		System.out.println("********** Player 2 cards : **********");
+		queueOfCardsObject2.saveSortedCards();
+		queueOfCardsObject2.showCardQueue();
+		System.out.println();
+		
+
+		System.out.println("********** Player 3 cards : **********");
+		queueOfCardsObject3.saveSortedCards();
+		queueOfCardsObject3.showCardQueue();
+		System.out.println();
+		
+
+		System.out.println("********** Player 4 cards : **********");
+		queueOfCardsObject4.saveSortedCards();
+		queueOfCardsObject4.showCardQueue();
+	}
 }
 
 
@@ -216,13 +241,8 @@ public class DeckofCardsUsingPlayerObject
 	public static void main(String[] args) throws FileNotFoundException, IOException 
 	{
 		Cards cardsObject = new Cards();
+		queueOfCards queueOfCardsObject = new queueOfCards();
 		cardsObject.shuffle();
-		queueOfCards temparoryObject = new queueOfCards();
-		temparoryObject.enqueue("a");
-		temparoryObject.enqueue("b");
-		temparoryObject.enqueue("c");
-		temparoryObject.showCardQueue();
-		temparoryObject.dequeue();
-		temparoryObject.showCardQueue();
+		cardsObject.showPlayerAndCardsInSortedOrder();
 	}
 }
