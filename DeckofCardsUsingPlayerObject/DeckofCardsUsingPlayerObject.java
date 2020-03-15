@@ -1,144 +1,145 @@
 package DeckofCardsUsingPlayerObject;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Random;
-import java.util.Scanner;
 
 
-//CREATING NODE FOR LINK LIST
-class Node
+//CREATING CARD NODE FOR CARD QUEUE 
+class cardNode
 {
-	String expression;
-	Node nextNode = null;
+	String card;
+	cardNode nextCardNode = null;
 } 
 
 
-//CREATING LINK LIST CLASS
-class StackList<T>
-{
-	//NODE TYPE VAIABLE
-	Node headNode = new Node();
+//CREATING QUEUE USING LINK LIST
+class queueOfCards<T>
+{ 
+	//headCardNode cardNode TYPE VAIABLE
+	cardNode headCardNode = new cardNode();
 	int size = 0;
 
 
-	//EMPTY STACK METHOD
-	Node stack()
+	//ENQUEUE METHOD
+	public void enqueue(String card)
 	{
-		return headNode;
-	} 
+		//VARIABLES OF CARD NODE
+		cardNode addingCardNewCardNode = new cardNode();
+		addingCardNewCardNode.card = card;
+		addingCardNewCardNode.nextCardNode = null;
 
 
-	//METHOD OF TAKING INPUT
-	String takeInput()
-	{
-		System.out.println("Enter your expression : ");
-		Scanner scannerObject = new Scanner(System.in);
-		String expressionInput = scannerObject.next();
-		return expressionInput;		
-	}
-
-
-	//PUSH METHOD
-	public void push(String expression)
-	{
-		//VARIABLES OF NODE	
-		Node addingExpression = new Node();
-		addingExpression.expression = expression;
-		addingExpression.nextNode = null;
-
-
-		if(headNode.nextNode == null )
+		if(headCardNode.nextCardNode == null )
 		{
-			headNode.nextNode = addingExpression;
+			headCardNode.nextCardNode = addingCardNewCardNode;
 			size++;
 		}
 		else
 		{
-			Node temporaryHeadNode = headNode;
-			while(temporaryHeadNode.nextNode != null)
+			cardNode temporaryHeadCardNode = headCardNode;
+			while(temporaryHeadCardNode.nextCardNode != null)
 			{
-				temporaryHeadNode = temporaryHeadNode.nextNode;
+				temporaryHeadCardNode = temporaryHeadCardNode.nextCardNode;
 			}
-			temporaryHeadNode.nextNode = addingExpression;
+			temporaryHeadCardNode.nextCardNode = addingCardNewCardNode;
 			size++;
 		}
 	}
 
 
-	//METHOD TO SHOW STACK
-	public void showStack()
+	//DEQUEUE METHOD
+	String dequeue()
 	{
-		//VARIABLE
-		Node temporaryHeadNode = headNode;
-
-
-		while(temporaryHeadNode.nextNode != null)
+		if(headCardNode.nextCardNode == null)
 		{
-			temporaryHeadNode = temporaryHeadNode.nextNode;
-			System.out.println(temporaryHeadNode.expression);
-		}
-	}
-
-
-	//POP METHOD
-	String pop()
-	{
-		if(headNode.nextNode == null)
-		{
-			System.out.println("Stack is empty");
+			System.out.println("Queue is empty");
 			return "";
-		}
+		} 
 		else
 		{	
-			//VARIABLE
-			int temparoryIter = 0;
-			Node temparoryHead = headNode;
-
-
-			for(temparoryIter=0; temparoryIter<size; temparoryIter++)
-			{
-				temparoryHead = temparoryHead.nextNode;
-			}
-
-
-			String returnWord = temparoryHead.expression;
-			temparoryHead.nextNode = null;
+			cardNode previousHeadCardNode = headCardNode.nextCardNode; 			
+			headCardNode.nextCardNode = headCardNode.nextCardNode.nextCardNode;	
 			size--;
-			return returnWord;
+			return previousHeadCardNode.card;			
+		}
+	}		
+
+
+	//METHOD TO SHOW LIST OF CARDS 
+	public void showCardQueue()
+	{
+		try 
+		{
+			//VARIABLES
+			cardNode temporaryHeadCardNode = headCardNode;
+
+
+			while(temporaryHeadCardNode.nextCardNode != null)
+			{
+				temporaryHeadCardNode = temporaryHeadCardNode.nextCardNode;
+				System.out.println(temporaryHeadCardNode.card);
+			}
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println("Queue endded");
 		}
 	}
 
 
-	//PEEK METHOD
-	String peek()
+	//METHOD OF SORTING CARDS
+	void saveSortedCards() throws IOException,FileNotFoundException
 	{
-		//VARIABLE
-		Node temporaryHeadNode = headNode;
+		//ARRAY OF STRING
+		String[] arrayForSortingcards = new String[size];
 
 
-		while(temporaryHeadNode.nextNode != null)
-		{
-			temporaryHeadNode = temporaryHeadNode.nextNode;
+		//VARIABLES
+		cardNode temporaryHeadCardNode2 = headCardNode;
+		int arrayIndex = 0;
+
+
+		//ADDING LIST'S cardS INTO ARRAY
+		while(temporaryHeadCardNode2.nextCardNode != null)
+		{				
+			temporaryHeadCardNode2 = temporaryHeadCardNode2.nextCardNode;
+			arrayForSortingcards[arrayIndex] = temporaryHeadCardNode2.card;				
+			arrayIndex++;
 		}
-		return temporaryHeadNode.expression;
-	}
 
 
-	//METHOD OF SIZE
-	int size()
-	{
-		return size;
-	}
-
-
-	//STACK EMPTY OR NOT
-	void isEmpty()
-	{
-		if(size == 0)
+		//SORTING ARRAY AND ADDING INTO FILE
+		for(int arrayIndex2=0; arrayIndex2<arrayForSortingcards.length; arrayIndex2++)
 		{
-			System.out.println("Stack is empty");
+			for(int arrayIndex3=arrayIndex2+1; arrayIndex3<arrayForSortingcards.length; arrayIndex3++)
+			{
+				//SPLITING ARRAY DATA INTO RANK AND SUIT
+				String [] arrayOfRank1 = (arrayForSortingcards[arrayIndex2]).split("-",2);
+				String [] arrayOfRank2 = (arrayForSortingcards[arrayIndex3]).split("-",2);
+				
+				
+				//SORTING ARRAY
+				if(0 < (arrayOfRank1[1].compareTo(arrayOfRank2[1])))
+				{					
+					String temparorySwapVairable = arrayForSortingcards[arrayIndex2];
+					arrayForSortingcards[arrayIndex2] = arrayForSortingcards[arrayIndex3];
+					arrayForSortingcards[arrayIndex3] = temparorySwapVairable;		
+				}						
+			}
 		}
-		else
-		{
-			System.out.println("Stack is Not empty");
+		
+		
+		//VARIABLES
+		cardNode temporaryHeadCardNode = headCardNode;
+		int arrayIndex1 = 0;
+		
+		
+		//ADDING CARDS FORM QUEUE TO ARRAY
+		while(temporaryHeadCardNode.nextCardNode != null)
+		{				
+			temporaryHeadCardNode = temporaryHeadCardNode.nextCardNode;
+			temporaryHeadCardNode.card = arrayForSortingcards[arrayIndex1];				
+			arrayIndex1++;
 		}
 	}
 }
@@ -152,16 +153,23 @@ class Cards
 	String[] suit = {"Clubs","Diamonds", "Hearts","Spades"};
 	String[][] cards = new String[suit.length][rank.length];
 	String[] player = {"player1","player2","player3","player4"};
-
+	
+	
+	//CREATED OBJECTS OF LINK LIST OF CARDS CLASS (HAS-A RELATIONSHIP - COMPOSITION)
+	queueOfCards queueOfCardsObject1 = new queueOfCards();
+	queueOfCards queueOfCardsObject2 = new queueOfCards();
+	queueOfCards queueOfCardsObject3 = new queueOfCards();
+	queueOfCards queueOfCardsObject4 = new queueOfCards();
+	
 
 	//SHUFFLE METHOD
-	void shuffle()
+	void shuffle() throws FileNotFoundException, IOException
 	{
 		//RANDOM NUMBER GENERATION
 		Random randomCards = new Random();
 		int row = randomCards.nextInt(suit.length);
 		int column = randomCards.nextInt(rank.length);
-
+		
 
 		//INSETING CARDS FROM 2-D ARRAYS
 		for (int suitIterator=0; suitIterator<suit.length; suitIterator++)
@@ -171,8 +179,8 @@ class Cards
 				cards[suitIterator][rankIterator] = suit[suitIterator] + "-" + rank[rankIterator];				
 			}
 		}
-		
-		
+
+
 		//FETCHING CARDS FROM 2-D ARRAYS
 		for (int suitIterator=0; suitIterator<suit.length; suitIterator++)
 		{
@@ -184,20 +192,37 @@ class Cards
 					column = randomCards.nextInt(rank.length);
 				}
 				System.out.println(player[suitIterator]+ " : " + cards[row][column]);
+				
+				
+				if(suitIterator == 0)
+					queueOfCardsObject1.enqueue("Player"+(suitIterator+1)+" : "+cards[row][column]);				
+				else if(suitIterator == 1 )
+					queueOfCardsObject2.enqueue("Player"+(suitIterator+1)+" : "+cards[row][column]);
+				else if(suitIterator == 2)
+					queueOfCardsObject3.enqueue("Player"+(suitIterator+1)+" : "+cards[row][column]);
+				else if (suitIterator == 3)
+					queueOfCardsObject4.enqueue("Player"+(suitIterator+1)+" : "+cards[row][column]);	
 				cards[row][column] = null;
 			}
 			System.out.println();
 		}
+	
 	}	
 }
 
 
-
-public class DeckofCardsUsingPlayerObject {
-
-	public static void main(String[] args) {
-		// TODO Auto-generated method stub
-
+public class DeckofCardsUsingPlayerObject
+{
+	public static void main(String[] args) throws FileNotFoundException, IOException 
+	{
+		Cards cardsObject = new Cards();
+		cardsObject.shuffle();
+		queueOfCards temparoryObject = new queueOfCards();
+		temparoryObject.enqueue("a");
+		temparoryObject.enqueue("b");
+		temparoryObject.enqueue("c");
+		temparoryObject.showCardQueue();
+		temparoryObject.dequeue();
+		temparoryObject.showCardQueue();
 	}
-
 }
